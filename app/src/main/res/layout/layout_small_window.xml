@@ -1,14 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="70dp"
+    android:layout_height="40dp"
     android:orientation="vertical"
-    android:padding="15dp"
     android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/text_view_memory"
         android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:textColor="#ffffff"
         android:background="@drawable/bg_float_view"
         android:gravity="center"

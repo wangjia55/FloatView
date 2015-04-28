@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,27 +14,15 @@ import android.view.WindowManager;
  */
 public class FloatService extends Service {
 
-    private View mPopupView;
-    private WindowManager mWindowManger;
-    private WindowManager.LayoutParams mLayoutParames;
-
+    private MyWindowManager mMyManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mWindowManger = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mPopupView  = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_big_window,null);
+        Log.e("TAG","onCreate");
+        mMyManager = MyWindowManager.newInstance();
     }
 
-
-    private void initLayoutParams(){
-        mLayoutParames = new WindowManager.LayoutParams();
-        mLayoutParames.width = 0;
-        mLayoutParames.height = 0;
-        mLayoutParames.windowAnimations = 0;
-        mLayoutParames.format = PixelFormat.TRANSPARENT;
-        mLayoutParames.flags  = 0;
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,14 +31,19 @@ public class FloatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("TAG","onStartCommand");
+        mMyManager.removeBigView(getApplicationContext());
+        mMyManager.showSmallView(getApplicationContext());
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mWindowManger != null){
-
+        Log.e("TAG","onDestroy");
+        if (mMyManager != null){
+            mMyManager.removeBigView(getApplicationContext());
+            mMyManager.removeSmallView(getApplicationContext());
         }
     }
 }

@@ -3,6 +3,7 @@
     <declare-styleable name="WaterWaveView">
         <attr name="radius" format="dimension"/>
         <attr name="stroke" format="dimension"/>
+        <attr name="textSize" format="dimension"/>
     </declare-styleable>
 
 </resources>

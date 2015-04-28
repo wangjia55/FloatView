@@ -1,4 +1,4 @@
-package com.jacob.floatview;
+package com.jacob.floatview.view;
 
 /**
  * Created by jacob-wj on 2015/4/27.
@@ -16,6 +16,8 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+
+import com.jacob.floatview.R;
 
 /**
  * Package : com.jacob.waveview
@@ -57,7 +59,7 @@ public class WaterWaveView extends View {
      */
     private Rect mRectTips = new Rect();
 
-    private String mTipString = "剩余电量";
+    private String mTipString = "内存占用";
 
     /**
      * View中心点的坐标
@@ -94,6 +96,8 @@ public class WaterWaveView extends View {
 
     private boolean isWaving = true;
 
+    private int mTextSize = spToPx(40);
+
     public WaterWaveView(Context context) {
         this(context, null);
     }
@@ -104,9 +108,11 @@ public class WaterWaveView extends View {
 
     public WaterWaveView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray= context.obtainStyledAttributes(attrs,R.styleable.WaterWaveView);
+        TypedArray typedArray= context.obtainStyledAttributes(attrs, R.styleable.WaterWaveView);
         mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.WaterWaveView_stroke,mStrokeWidth);
         mRadius  = typedArray.getDimensionPixelSize(R.styleable.WaterWaveView_radius,mRadius);
+        mTextSize = typedArray.getDimensionPixelSize(R.styleable.WaterWaveView_textSize,mTextSize);
+
         typedArray.recycle();
         initView();
     }
@@ -133,7 +139,7 @@ public class WaterWaveView extends View {
         mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintText.setDither(true);
         mPaintText.setColor(Color.parseColor("#FFFFFF"));
-        mPaintText.setTextSize(spToPx(40));
+        mPaintText.setTextSize(mTextSize);
 
         mPaintTextTips = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintTextTips.setDither(true);

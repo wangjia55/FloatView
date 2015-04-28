@@ -1,23 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/bg_button"
     android:gravity="center_horizontal">
 
-    <com.jacob.floatview.WaterWaveView
+    <com.jacob.floatview.view.WaterWaveView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         custom:radius="50dp"
-        custom:stroke="10dp"/>
+        custom:stroke="7dp"
+        custom:textSize ="15sp"/>
 
     <Button
         android:id="@+id/button_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:textColor="#ff4f4f4f"
         android:background="@drawable/bg_button"
         android:text="返回"/>
 
