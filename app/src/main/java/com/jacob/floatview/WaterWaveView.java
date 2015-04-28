@@ -4,6 +4,7 @@ package com.jacob.floatview;
  * Created by jacob-wj on 2015/4/27.
  */
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -103,8 +104,13 @@ public class WaterWaveView extends View {
 
     public WaterWaveView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray typedArray= context.obtainStyledAttributes(attrs,R.styleable.WaterWaveView);
+        mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.WaterWaveView_stroke,mStrokeWidth);
+        mRadius  = typedArray.getDimensionPixelSize(R.styleable.WaterWaveView_radius,mRadius);
+        typedArray.recycle();
         initView();
     }
+
 
     private void initView() {
         mPaintOutCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
