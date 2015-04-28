@@ -29,6 +29,9 @@ public class FloatService extends Service {
         return null;
     }
 
+    /**
+     * 启动service的同时也显示view
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("TAG","onStartCommand");

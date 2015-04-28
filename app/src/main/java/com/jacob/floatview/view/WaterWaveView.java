@@ -214,7 +214,7 @@ public class WaterWaveView extends View {
         canvas.drawText(text, (getWidth() - mRectProgress.width()) / 2, (getHeight() + mRectProgress.height()) / 2, mPaintText);
 
         //绘制tips的文字
-        canvas.drawText(mTipString, (getWidth() - mRectTips.width()) / 2, (getHeight() / 3 + mRectProgress.height()) / 2, mPaintTextTips);
+        canvas.drawText(mTipString, (getWidth() - mRectTips.width()) / 2, (getHeight() / 2 + mRectProgress.height()) / 2, mPaintTextTips);
         if (isWaving) {
             mHandler.sendEmptyMessage(10);
         }

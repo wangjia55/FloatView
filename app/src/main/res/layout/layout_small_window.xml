@@ -12,5 +12,5 @@
         android:background="@drawable/bg_float_view"
         android:gravity="center"
         android:textSize="18sp"
-        android:text="60%"/>
+        android:text="30%"/>
 </LinearLayout>

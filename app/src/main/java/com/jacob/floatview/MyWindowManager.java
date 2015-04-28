@@ -3,7 +3,6 @@ package com.jacob.floatview;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 
@@ -11,11 +10,12 @@ import com.jacob.floatview.view.FloatBigView;
 import com.jacob.floatview.view.FloatSmallView;
 
 /**
- * Created by jacob-wj on 2015/4/28.
+ * windowManager 的工具类，统一对view 的显示和消息进行管理
  */
 public class MyWindowManager {
 
     private static MyWindowManager windowManager = new MyWindowManager();
+
     private MyWindowManager(){}
 
     public static MyWindowManager newInstance(){
@@ -24,17 +24,23 @@ public class MyWindowManager {
 
     private  WindowManager mWindowManager;
 
-    private  WindowManager.LayoutParams mBigParames;
+    private  WindowManager.LayoutParams mBigParams;
 
-    private  WindowManager.LayoutParams mSmallParames;
+    private  WindowManager.LayoutParams mSmallParams;
 
     private FloatSmallView mSmallView;
 
     private FloatBigView mBigView;
 
-    private boolean isSmallShow = false;
+    /**
+     * 大的悬浮框是否显示
+     */
+    public boolean isSmallShow = false;
 
-    private boolean isBigShow= false;
+    /**
+     * 小的悬浮框是否显示
+     */
+    public boolean isBigShow= false;
 
 
     /**
@@ -45,6 +51,7 @@ public class MyWindowManager {
         if (mBigView != null){
             windowManager.removeView(mBigView);
             mBigView = null;
+            isBigShow = true;
         }
     }
 
@@ -56,6 +63,7 @@ public class MyWindowManager {
         if (mSmallView != null){
             windowManager.removeView(mSmallView);
             mSmallView = null;
+            isSmallShow = false;
         }
     }
 
@@ -63,56 +71,63 @@ public class MyWindowManager {
      * 显示大的悬浮框，显示在屏幕的正中心
      */
     public  void showBigView(Context context){
+        if (isBigShow) return;
         WindowManager windowManager = getWindowManager(context);
         if (mBigView== null){
             mBigView = new FloatBigView(context);
         }
 
-        if (mBigParames == null){
+        if (mBigParams == null){
             int[] screenSize = getScreenSize(context);
-            mBigParames = new WindowManager.LayoutParams();
-            mBigParames.width = mBigView.width;
-            mBigParames.height =mBigView.height;
-            mBigParames.x = (screenSize[0]-mBigView.width)/2;
-            mBigParames.y = (screenSize[1]-mBigView.height)/2;
+            mBigParams = new WindowManager.LayoutParams();
+            mBigParams.width = mBigView.width;
+            mBigParams.height =mBigView.height;
+            mBigParams.x = (screenSize[0]-mBigView.width)/2;
+            mBigParams.y = (screenSize[1]-mBigView.height)/2;
 
-            mBigParames.gravity = Gravity.LEFT| Gravity.TOP;
-            mBigParames.format = PixelFormat.TRANSPARENT;
-            mBigParames.type = WindowManager.LayoutParams.TYPE_PHONE;
+            mBigParams.gravity = Gravity.LEFT| Gravity.TOP;
+            mBigParams.format = PixelFormat.TRANSPARENT;
+            mBigParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         }
-        windowManager.addView(mBigView,mBigParames);
+        windowManager.addView(mBigView, mBigParams);
+        isBigShow = true;
     }
 
     /**
      * 创建小的悬浮框，默认显示在屏幕的最右边中心的位置
      */
     public  void showSmallView(Context context){
+        if (isSmallShow) return;
         WindowManager windowManager = getWindowManager(context);
 
         if (mSmallView == null){
             mSmallView = new FloatSmallView(context);
         }
 
-        if (mSmallParames == null){
+        if (mSmallParams == null){
             int[] screenSize = getScreenSize(context);
-            mSmallParames = new WindowManager.LayoutParams();
-            mSmallParames.width = mSmallView.width;
-            mSmallParames.height = mSmallView.height;
-            mSmallParames.x = screenSize[0]-mSmallView.width;
-            mSmallParames.y = screenSize[1]/2;
-            mSmallParames.format = PixelFormat.TRANSPARENT;
-            mSmallParames.windowAnimations = 0;
-            mSmallParames.gravity = Gravity.LEFT| Gravity.TOP;
-            mSmallParames.type = WindowManager.LayoutParams.TYPE_PHONE;
-            mSmallParames.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|
+            mSmallParams = new WindowManager.LayoutParams();
+            mSmallParams.width = mSmallView.width;
+            mSmallParams.height = mSmallView.height;
+            mSmallParams.x = screenSize[0]-mSmallView.width;
+            mSmallParams.y = screenSize[1]/2;
+            mSmallParams.format = PixelFormat.TRANSPARENT;
+            mSmallParams.windowAnimations = 0;
+            mSmallParams.gravity = Gravity.LEFT| Gravity.TOP;
+            mSmallParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+            mSmallParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         }
-        mSmallView.setLayoutParams(mSmallParames);
-        windowManager.addView(mSmallView,mSmallParames);
+        mSmallView.setLayoutParams(mSmallParams);
+        windowManager.addView(mSmallView, mSmallParams);
+        isSmallShow = true;
     }
 
 
-    private  int[] getScreenSize(Context context){
+    /**
+     * 获取屏幕的尺寸
+     */
+    public int[] getScreenSize(Context context){
         WindowManager windowManager = getWindowManager(context);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);

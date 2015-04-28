@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
+    android:layout_width="180dp"
+    android:layout_height="200dp"
     android:orientation="vertical"
     android:background="@drawable/bg_button"
     android:gravity="center_horizontal">
